@@ -1,0 +1,20 @@
+# Blueprint da Render para o site institucional da Tecsol (Vite + React).
+# Site estatico: o formulario de lead posta na API do egn-tecsol, que cria o
+# negocio no funil "Comercial - Pre-vendas" da Solarz.
+#
+# A URL da API entra no BUILD (variavel VITE_*), entao a API precisa estar no
+# ar antes — senao o formulario aponta pro lugar errado e o lead se perde.
+
+services:
+  - type: web
+    name: tecsol-site
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_TECSOL_API_URL
+        value: https://tecsol-api.onrender.com/api/v1
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
