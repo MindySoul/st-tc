@@ -8,12 +8,12 @@ import heroRes from '@/assets/hero-residencial.jpg';
 import heroCom from '@/assets/hero-comercial.jpg';
 import heroRur from '@/assets/hero-rural.jpg';
 import heroInd from '@/assets/hero-industrial.jpg';
-import caseLinhares from '@/assets/case-linhares.jpg.asset.json';
-import casePadaria from '@/assets/case-padaria.jpg.asset.json';
-import caseAlvorada from '@/assets/case-alvorada.jpg.asset.json';
-import caseFazenda from '@/assets/case-fazenda.jpg.asset.json';
-import caseColatina from '@/assets/case-colatina.jpg.asset.json';
-import caseSaoMateus from '@/assets/case-saomateus.jpg.asset.json';
+import caseLinhares from '@/assets/case-linhares.jpg';
+import casePadaria from '@/assets/case-padaria.jpg';
+import caseAlvorada from '@/assets/case-alvorada.jpg';
+import caseFazenda from '@/assets/case-fazenda.jpg';
+import caseColatina from '@/assets/case-colatina.jpg';
+import caseSaoMateus from '@/assets/case-saomateus.jpg';
 
 type Case = {
   img: string; tipo: string; sistema: string; titulo: string;

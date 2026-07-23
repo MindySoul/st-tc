@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import heroResAsset from '@/assets/hero-residencial-new.jpg.asset.json';
-import heroComAsset from '@/assets/hero-comercial-new.jpg.asset.json';
-import heroRurAsset from '@/assets/hero-rural-new.jpg.asset.json';
-import heroIndAsset from '@/assets/hero-industrial-new.jpg.asset.json';
+import heroResAsset from '@/assets/hero-residencial-new.jpg';
+import heroComAsset from '@/assets/hero-comercial-new.jpg';
+import heroRurAsset from '@/assets/hero-rural-new.jpg';
+import heroIndAsset from '@/assets/hero-industrial-new.jpg';
 
 const heroRes = heroResAsset.url;
 const heroCom = heroComAsset.url;

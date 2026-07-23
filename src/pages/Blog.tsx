@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import Seo from '@/components/sections/Seo';
 import { Calendar, Tag } from 'lucide-react';
-import blog1 from '@/assets/blog-1.jpg.asset.json';
-import blog2 from '@/assets/blog-2.jpg.asset.json';
-import blog3 from '@/assets/blog-3.jpg.asset.json';
-import blog4 from '@/assets/blog-4.jpg.asset.json';
-import blog5 from '@/assets/blog-5.jpg.asset.json';
-import blog6 from '@/assets/blog-6.jpg.asset.json';
+import blog1 from '@/assets/blog-1.jpg';
+import blog2 from '@/assets/blog-2.jpg';
+import blog3 from '@/assets/blog-3.jpg';
+import blog4 from '@/assets/blog-4.jpg';
+import blog5 from '@/assets/blog-5.jpg';
+import blog6 from '@/assets/blog-6.jpg';
 import { useState } from 'react';
 
 export const POSTS = [

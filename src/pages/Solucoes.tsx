@@ -5,10 +5,10 @@ import Depoimentos from '@/components/sections/Depoimentos';
 import LeadForm from '@/components/sections/LeadForm';
 import CtaFinal from '@/components/sections/CtaFinal';
 import fortlevLogo from '@/assets/logo-fortlev.png';
-import solResidencial from '@/assets/sol-residencial.jpg.asset.json';
-import solComercial from '@/assets/sol-comercial.jpg.asset.json';
-import solRural from '@/assets/sol-rural.jpg.asset.json';
-import solIndustrial from '@/assets/sol-industrial.jpg.asset.json';
+import solResidencial from '@/assets/sol-residencial.jpg';
+import solComercial from '@/assets/sol-comercial.jpg';
+import solRural from '@/assets/sol-rural.jpg';
+import solIndustrial from '@/assets/sol-industrial.jpg';
 
 const sistemas = [
   { Icon: Sun, h: 'On-Grid — Conectado à Rede',
