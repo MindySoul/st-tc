@@ -26,16 +26,16 @@ const sistemas = [
 ];
 
 const segmentos = [
-  { Icon: Home, img: solResidencial.url, h: 'Energia Solar Residencial — Economia na sua casa', tipo: 'Residencial',
+  { Icon: Home, img: solResidencial, h: 'Energia Solar Residencial — Economia na sua casa', tipo: 'Residencial',
     d: 'Reduza sua conta de luz em até 95% e valorize seu imóvel com energia limpa e financiamento facilitado.',
     b: ['Projeto sob medida', 'Instalação rápida e segura', 'Financiamento em até 120x', 'Garantia Fortlev de 30 anos'] },
-  { Icon: Building2, img: solComercial.url, h: 'Energia Solar Comercial — Reduza custos do seu negócio', tipo: 'Comercial',
+  { Icon: Building2, img: solComercial, h: 'Energia Solar Comercial — Reduza custos do seu negócio', tipo: 'Comercial',
     d: 'Mais lucro no fim do mês. Sistemas dimensionados para comércios e empresas, com ROI rápido.',
     b: ['ROI em até 3 anos', 'Estoque próprio', 'Manutenção e monitoramento', 'Imagem sustentável'] },
-  { Icon: Tractor, img: solRural.url, h: 'Energia Solar Rural — Potência para o campo', tipo: 'Rural',
+  { Icon: Tractor, img: solRural, h: 'Energia Solar Rural — Potência para o campo', tipo: 'Rural',
     d: 'Do On-Grid ao Off-Grid. Energia para irrigação, granjas, fazendas e propriedades rurais.',
     b: ['On, Off ou Híbrido', 'Bombeamento solar', 'Crédito rural facilitado', 'Independência total'] },
-  { Icon: Factory, img: solIndustrial.url, h: 'Energia Solar Industrial — Grande escala, grande economia', tipo: 'Industrial',
+  { Icon: Factory, img: solIndustrial, h: 'Energia Solar Industrial — Grande escala, grande economia', tipo: 'Industrial',
     d: 'Soluções de alta potência com a maior garantia do mercado. Estoque próprio para projetos grandes.',
     b: ['Alta potência (kWp/MWp)', 'Engenharia dedicada', 'OMM completo', 'Maior garantia do ES'] },
 ];

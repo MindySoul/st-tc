@@ -21,12 +21,12 @@ type Case = {
 };
 
 const cases: Case[] = [
-  { img: caseLinhares.url, tipo: 'Residencial', sistema: 'On-Grid', titulo: 'Residência em Linhares — 6,6 kWp', cidade: 'Linhares - ES', kwp: '6,6 kWp', economia: 'R$ 980/mês', data: 'Jan 2025', frase: 'Conta caiu de R$1.100 para R$80. Investimento perfeito.', payback: '3 anos e 2 meses' },
-  { img: casePadaria.url, tipo: 'Comercial', sistema: 'On-Grid', titulo: 'Escritório Contábil — 22 kWp', cidade: 'Aracruz - ES', kwp: '22 kWp', economia: 'R$ 4.200/mês', data: 'Out 2024', frase: 'Agora o escritório economiza milhares de reais por mês com energia solar.', payback: '2 anos e 8 meses' },
-  { img: caseAlvorada.url, tipo: 'Industrial', sistema: 'Híbrido', titulo: 'Indústria Metalúrgica — 180 kWp', cidade: 'Linhares - ES', kwp: '180 kWp', economia: 'R$ 28.500/mês', data: 'Ago 2024', frase: 'Uma economia expressiva que trouxe mais previsibilidade para os custos da operação.', payback: '3 anos' },
-  { img: caseFazenda.url, tipo: 'Rural', sistema: 'Off-Grid', titulo: 'Fazenda Boa Vista — 35 kWp', cidade: 'Sooretama - ES', kwp: '35 kWp', economia: 'R$ 5.400/mês', data: 'Mar 2025', frase: 'Independência total. A irrigação roda sem peso na conta.', payback: '3 anos e 6 meses' },
-  { img: caseColatina.url, tipo: 'Residencial', sistema: 'Híbrido', titulo: 'Casa Premium na Lagoa — 12 kWp', cidade: 'Linhares - ES', kwp: '12 kWp', economia: 'R$ 1.700/mês', data: 'Fev 2025', frase: 'Energia solar para unir economia, sustentabilidade e valorização do imóvel.', payback: '4 anos' },
-  { img: caseSaoMateus.url, tipo: 'Comercial', sistema: 'On-Grid', titulo: 'Escritório em São Mateus — 18 kWp', cidade: 'São Mateus - ES', kwp: '18 kWp', economia: 'R$ 3.100/mês', data: 'Nov 2024', frase: 'Projeto profissional e instalação rápida.', payback: '3 anos' },
+  { img: caseLinhares, tipo: 'Residencial', sistema: 'On-Grid', titulo: 'Residência em Linhares — 6,6 kWp', cidade: 'Linhares - ES', kwp: '6,6 kWp', economia: 'R$ 980/mês', data: 'Jan 2025', frase: 'Conta caiu de R$1.100 para R$80. Investimento perfeito.', payback: '3 anos e 2 meses' },
+  { img: casePadaria, tipo: 'Comercial', sistema: 'On-Grid', titulo: 'Escritório Contábil — 22 kWp', cidade: 'Aracruz - ES', kwp: '22 kWp', economia: 'R$ 4.200/mês', data: 'Out 2024', frase: 'Agora o escritório economiza milhares de reais por mês com energia solar.', payback: '2 anos e 8 meses' },
+  { img: caseAlvorada, tipo: 'Industrial', sistema: 'Híbrido', titulo: 'Indústria Metalúrgica — 180 kWp', cidade: 'Linhares - ES', kwp: '180 kWp', economia: 'R$ 28.500/mês', data: 'Ago 2024', frase: 'Uma economia expressiva que trouxe mais previsibilidade para os custos da operação.', payback: '3 anos' },
+  { img: caseFazenda, tipo: 'Rural', sistema: 'Off-Grid', titulo: 'Fazenda Boa Vista — 35 kWp', cidade: 'Sooretama - ES', kwp: '35 kWp', economia: 'R$ 5.400/mês', data: 'Mar 2025', frase: 'Independência total. A irrigação roda sem peso na conta.', payback: '3 anos e 6 meses' },
+  { img: caseColatina, tipo: 'Residencial', sistema: 'Híbrido', titulo: 'Casa Premium na Lagoa — 12 kWp', cidade: 'Linhares - ES', kwp: '12 kWp', economia: 'R$ 1.700/mês', data: 'Fev 2025', frase: 'Energia solar para unir economia, sustentabilidade e valorização do imóvel.', payback: '4 anos' },
+  { img: caseSaoMateus, tipo: 'Comercial', sistema: 'On-Grid', titulo: 'Escritório em São Mateus — 18 kWp', cidade: 'São Mateus - ES', kwp: '18 kWp', economia: 'R$ 3.100/mês', data: 'Nov 2024', frase: 'Projeto profissional e instalação rápida.', payback: '3 anos' },
 ];
 
 const filtros = ['Todos','Residencial','Comercial','Industrial','Rural'];

@@ -5,10 +5,10 @@ import heroComAsset from '@/assets/hero-comercial-new.jpg';
 import heroRurAsset from '@/assets/hero-rural-new.jpg';
 import heroIndAsset from '@/assets/hero-industrial-new.jpg';
 
-const heroRes = heroResAsset.url;
-const heroCom = heroComAsset.url;
-const heroRur = heroRurAsset.url;
-const heroInd = heroIndAsset.url;
+const heroRes = heroResAsset;
+const heroCom = heroComAsset;
+const heroRur = heroRurAsset;
+const heroInd = heroIndAsset;
 
 const slides = [
   { img: heroRes, badge: 'PIONEIRA NO NORTE DO ES DESDE 2015',

@@ -9,9 +9,9 @@ import contato1Asset from '@/assets/contato-1.jpg';
 import contato2Asset from '@/assets/contato-2.jpg';
 import contato3Asset from '@/assets/contato-3.jpg';
 import fortlevLogo from '@/assets/logo-fortlev.png';
-const heroRes = contato1Asset.url;
-const heroCom = contato2Asset.url;
-const heroRur = contato3Asset.url;
+const heroRes = contato1Asset;
+const heroCom = contato2Asset;
+const heroRur = contato3Asset;
 
 const slides = [
   { img: heroRes, tag: 'Residencial', frase: 'Conta caiu de R$1.100 para R$80', nome: 'Marcos Andrade', cidade: 'Linhares - ES', desc: 'Sistema 6,6 kWp instalado em janeiro/2025. Economia de R$980/mês.' },
