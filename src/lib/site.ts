@@ -14,6 +14,45 @@ export const SITE = {
 // "Comercial - Pré-vendas" da Solarz — ver api/app/routes/leads_site.py.
 const API_BASE = import.meta.env.VITE_TECSOL_API_URL ?? 'http://127.0.0.1:5000/api/v1';
 
+// --- Rastreio de anúncio (Google/Meta) --------------------------------------
+// Quem chega por anúncio cai aqui com ?gclid=... (Google) ou ?fbclid=... (Meta).
+// Guardamos no localStorage porque o visitante costuma navegar/voltar antes de
+// preencher o form; quando o lead vira venda no CRM, esse id volta pro Google/
+// Meta como conversão offline (ver api/app/google_ads.py). Janela de 90 dias,
+// que é o prazo de atribuição do Google.
+const CLID_TTL_MS = 90 * 24 * 60 * 60 * 1000;
+
+function saveClid(chave: string, valor: string | null) {
+  if (typeof window === 'undefined' || !valor) return;
+  try { localStorage.setItem(chave, JSON.stringify({ v: valor, t: Date.now() })); } catch { /* noop */ }
+}
+
+function readClid(chave: string): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(chave);
+    if (!raw) return null;
+    const { v, t } = JSON.parse(raw);
+    return v && Date.now() - t <= CLID_TTL_MS ? v : null;
+  } catch { return null; }
+}
+
+/** Lê gclid/fbclid da URL e guarda. Chamar no boot e é idempotente. */
+export function captureClickIds() {
+  if (typeof window === 'undefined') return;
+  const p = new URLSearchParams(window.location.search);
+  saveClid('tecsol_gclid', p.get('gclid'));
+  saveClid('tecsol_fbclid', p.get('fbclid'));
+}
+
+export function getClickIds() {
+  return { gclid: readClid('tecsol_gclid'), fbclid: readClid('tecsol_fbclid') };
+}
+
+// Captura já na importação (o form importa este módulo), garantindo o gclid da
+// landing mesmo que o usuário navegue antes de enviar.
+captureClickIds();
+
 export const CITIES = [
   'Linhares','Colatina','São Mateus','Aracruz','Ibiraçu','João Neiva',
   'Governador Lindenberg','Rio Bananal','Sooretama','Pinheiros','Boa Esperança',
@@ -59,6 +98,9 @@ export async function sendLead(payload: Record<string, any>) {
         mensagem: payload.mensagem || payload.message || null,
         origem: payload.origem || payload.source || null,
         pagina: payload.pagina || payload.page || null,
+        // ids de clique de anúncio, pra virar conversão offline quando fechar
+        gclid: getClickIds().gclid,
+        fbclid: getClickIds().fbclid,
       }),
     });
     if (!res.ok) throw new Error(`API respondeu ${res.status}`);
