@@ -1,0 +1,5 @@
+Merge branch 'main' of https://github.com/kleberDevion/site-tecsol
+
+# Conflicts:
+#	src/integrations/supabase/types.ts
+#	src/lib/site.ts

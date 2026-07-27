@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tecsolengenharia.com.br/sitemap.xml

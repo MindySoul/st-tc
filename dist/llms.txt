@@ -1,0 +1,17 @@
+# Tecsol Engenharia
+
+> Energia solar fotovoltaica para residências, comércios, indústrias e propriedades rurais. Parceiro e integrador oficial Fortlev Solar.
+
+## Pages
+
+- [Home](/): Visão geral da Tecsol Engenharia, soluções em energia solar e simulador de economia.
+- [Soluções](/solucoes): Sistemas fotovoltaicos para residencial, comercial, industrial e rural.
+- [Por que a Tecsol?](/sobre): Sobre a empresa, diferenciais e parceria com a Fortlev Solar.
+- [Cases](/cases): Projetos entregues e resultados de clientes.
+- [Dúvidas](/duvidas): Perguntas frequentes sobre energia solar.
+- [Blog](/blog): Artigos e novidades sobre energia solar fotovoltaica.
+- [Contato](/contato): Solicite um orçamento e fale com a equipe.
+
+## Optional
+
+- [Política de Privacidade](/privacidade): Tratamento de dados e LGPD.
