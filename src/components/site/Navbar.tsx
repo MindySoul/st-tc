@@ -1,5 +1,9 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo-tecsol.png';
 
@@ -15,7 +19,7 @@ const links = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const loc = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -23,27 +27,30 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setOpen(false); }, [loc.pathname]);
+  useEffect(() => { setOpen(false); }, [pathname]);
+
+  // Equivale ao `end` do NavLink do react-router: "/" so fica ativo exato,
+  // as outras rotas tambem em subpaginas (ex: /blog/algum-post).
+  const ativo = (to: string) => (to === '/' ? pathname === '/' : pathname.startsWith(to));
 
   return (
     <header className={`sticky top-0 z-40 bg-background transition-shadow ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
       <div className="container grid grid-cols-[auto_1fr_auto] items-center h-16 lg:h-20 gap-4">
-        <Link to="/" aria-label="Tecsol Engenharia - Início" className="flex items-center">
-          <img src={logo} alt="Tecsol Engenharia logo" className="h-9 lg:h-11 w-auto" />
+        <Link href="/" aria-label="Tecsol Engenharia - Início" className="flex items-center">
+          <Image src={logo} alt="Tecsol Engenharia logo" className="h-9 lg:h-11 w-auto" priority />
         </Link>
 
         <nav className="hidden lg:flex items-center justify-center gap-7">
           {links.map(l => (
-            <NavLink key={l.to} to={l.to} end={l.to === '/'}
-              className={({isActive}) =>
-                `text-[14px] font-medium transition-colors ${isActive ? 'text-primary' : 'text-foreground hover:text-primary'}`}>
+            <Link key={l.to} href={l.to}
+              className={`text-[14px] font-medium transition-colors ${ativo(l.to) ? 'text-primary' : 'text-foreground hover:text-primary'}`}>
               {l.label}
-            </NavLink>
+            </Link>
           ))}
         </nav>
 
         <div className="hidden lg:flex justify-end">
-          <Link to="/contato"
+          <Link href="/contato"
             className="bg-primary text-primary-foreground px-5 py-2.5 rounded-md font-semibold text-[13px] uppercase tracking-wide btn-press hover:bg-primary-dark">
             Solicitar Orçamento
           </Link>
@@ -58,13 +65,12 @@ const Navbar = () => {
         <div className="lg:hidden border-t border-border animate-fade-in bg-background">
           <div className="container py-4 flex flex-col gap-1">
             {links.map(l => (
-              <NavLink key={l.to} to={l.to} end={l.to === '/'}
-                className={({isActive}) =>
-                  `py-3 px-2 text-[15px] font-medium border-b border-border ${isActive ? 'text-primary' : 'text-foreground'}`}>
+              <Link key={l.to} href={l.to}
+                className={`py-3 px-2 text-[15px] font-medium border-b border-border ${ativo(l.to) ? 'text-primary' : 'text-foreground'}`}>
                 {l.label}
-              </NavLink>
+              </Link>
             ))}
-            <Link to="/contato" className="mt-3 bg-primary text-primary-foreground text-center py-3 rounded-md font-semibold uppercase text-[13px]">
+            <Link href="/contato" className="mt-3 bg-primary text-primary-foreground text-center py-3 rounded-md font-semibold uppercase text-[13px]">
               Solicitar Orçamento
             </Link>
           </div>

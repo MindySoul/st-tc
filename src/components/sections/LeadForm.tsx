@@ -1,5 +1,8 @@
+'use client';
+
 import { useState } from 'react';
-import { CITIES, SOLUCOES, VALORES_CONTA, maskPhone, sendLead, waLink } from '@/lib/site';
+import { CITIES, SOLUCOES, VALORES_CONTA, getClickIds, maskPhone, pushLeadEvent, waLink } from '@/lib/site';
+import { submitLead } from '@/lib/actions';
 import { CheckCircle2 } from 'lucide-react';
 
 type Props = { origem: string; pagina: string; compact?: boolean; tipoPadrao?: string };
@@ -10,13 +13,19 @@ const LeadForm = ({ origem, pagina, compact, tipoPadrao }: Props) => {
   });
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [erro, setErro] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await sendLead({ ...form, origem, pagina });
+    setErro(false);
+    const dados = { ...form, origem, pagina, ...getClickIds() };
+    pushLeadEvent(dados);
+    const { ok } = await submitLead(dados);
     setLoading(false);
-    setDone(true);
+    // Só mostra a tela de sucesso se o lead realmente chegou na API.
+    if (ok) setDone(true);
+    else setErro(true);
   };
 
   if (done) {
@@ -73,6 +82,15 @@ const LeadForm = ({ origem, pagina, compact, tipoPadrao }: Props) => {
           <>Quero que a equipe entre em contato →</>
         )}
       </button>
+      {erro && (
+        <p className="text-sm text-destructive" role="alert">
+          Não conseguimos enviar seus dados agora. Tente de novo ou{' '}
+          <a href={waLink('Olá, tentei enviar o formulário no site da Tecsol e deu erro.')}
+            target="_blank" rel="noopener noreferrer" className="underline font-semibold">
+            fale direto no WhatsApp
+          </a>.
+        </p>
+      )}
       <p className="flex items-start gap-2 text-xs text-muted-foreground">
         <CheckCircle2 size={14} className="text-primary mt-0.5 shrink-0"/>
         Nossa equipe especialista entrará em contato em até 5 minutos no WhatsApp informado.

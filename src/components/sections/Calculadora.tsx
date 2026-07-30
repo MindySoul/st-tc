@@ -1,5 +1,8 @@
+'use client';
+
 import { useState } from 'react';
-import { CITIES, SOLUCOES, maskPhone, sendLead, waLink } from '@/lib/site';
+import { CITIES, SOLUCOES, getClickIds, maskPhone, pushLeadEvent, waLink } from '@/lib/site';
+import { submitLead } from '@/lib/actions';
 import { CheckCircle2, ShieldCheck, Clock, Sparkles } from 'lucide-react';
 
 const fmt = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
@@ -7,6 +10,7 @@ const fmt = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', curren
 const Calculadora = () => {
   const [step, setStep] = useState<1|2>(1);
   const [loading, setLoading] = useState(false);
+  const [leadErro, setLeadErro] = useState(false);
   const [form, setForm] = useState({
     nome: '', telefone: '', cidade: '', tipo_solucao: '', valor_conta: 500,
   });
@@ -22,8 +26,20 @@ const Calculadora = () => {
     const payback = investimento / (economia * 12);
     const total = economia * 12 * 25;
     setResult({ economia, parcela, payback, total });
-    await sendLead({ ...form, origem: 'calculadora_inicio', pagina: '/' });
+    const dados = {
+      ...form,
+      valor_conta: String(form.valor_conta),
+      origem: 'calculadora_inicio',
+      pagina: '/',
+      ...getClickIds(),
+    };
+    pushLeadEvent(dados);
+    const { ok } = await submitLead(dados);
     setLoading(false);
+    setLeadErro(!ok);
+    // A simulação é o que o usuário veio buscar, então o resultado aparece de
+    // qualquer jeito; se o lead não chegou na API, o aviso abaixo oferece o
+    // WhatsApp pra não perder o contato.
     setStep(2);
   };
 
@@ -134,7 +150,9 @@ const Calculadora = () => {
                   <CheckCircle2 className="text-primary shrink-0 mt-0.5" size={20}/>
                   <div className="flex-1">
                     <p className="text-foreground text-sm">
-                      Nossa equipe especialista entrará em contato em até 5 minutos no WhatsApp informado.
+                      {leadErro
+                        ? 'Não conseguimos registrar seu contato agora. Fale com a gente no WhatsApp pra não perder a simulação.'
+                        : 'Nossa equipe especialista entrará em contato em até 5 minutos no WhatsApp informado.'}
                     </p>
                     <a href={waLink(`Olá, sou ${form.nome}, fiz a simulação no site da Tecsol.`)} target="_blank" rel="noopener noreferrer"
                       className="inline-block mt-3 bg-primary text-primary-foreground font-bold px-5 py-2.5 rounded-md text-xs uppercase btn-press hover:bg-primary-dark">

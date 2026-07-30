@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { waLink } from '@/lib/site';
 
 type Props = { titulo: string; texto?: string; primaryTo?: string; primaryLabel?: string };
@@ -8,7 +8,7 @@ const CtaFinal = ({ titulo, texto, primaryTo = '/contato', primaryLabel = 'Solic
       <h2 className="font-bold text-3xl lg:text-4xl mb-4 max-w-3xl mx-auto leading-tight">{titulo}</h2>
       {texto && <p className="opacity-95 max-w-2xl mx-auto mb-8">{texto}</p>}
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <Link to={primaryTo} className="bg-background text-primary font-bold px-7 py-3.5 rounded-md uppercase text-sm tracking-wide btn-press hover:bg-primary-soft">
+        <Link href={primaryTo} className="bg-background text-primary font-bold px-7 py-3.5 rounded-md uppercase text-sm tracking-wide btn-press hover:bg-primary-soft">
           {primaryLabel}
         </Link>
         <a href={waLink('Olá, vim pelo site da Tecsol e quero falar com um especialista.')} target="_blank" rel="noopener noreferrer"

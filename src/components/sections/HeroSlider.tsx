@@ -1,5 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
 import heroResAsset from '@/assets/hero-residencial-new.jpg';
 import heroComAsset from '@/assets/hero-comercial-new.jpg';
 import heroRurAsset from '@/assets/hero-rural-new.jpg';
@@ -42,7 +45,8 @@ const HeroSlider = () => {
       {slides.map((s, k) => (
         <div key={k}
           className={`absolute inset-0 transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <img src={s.img} alt={`Energia solar ${s.badge.toLowerCase()}`} className="absolute inset-0 w-full h-full object-cover" />
+          <Image src={s.img} alt={`Energia solar ${s.badge.toLowerCase()}`} fill sizes="100vw"
+            className="object-cover" priority={k === 0} />
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-transparent" />
           <div className="container relative h-full flex items-center">
             <div className="max-w-2xl py-10">
@@ -59,12 +63,12 @@ const HeroSlider = () => {
                     {s.cta1.label}
                   </a>
                 ) : (
-                  <Link to={(s.cta1 as any).to} className="bg-primary text-primary-foreground font-bold px-7 py-3.5 rounded-md uppercase text-sm tracking-wide btn-press hover:bg-primary-dark">
+                  <Link href={(s.cta1 as any).to} className="bg-primary text-primary-foreground font-bold px-7 py-3.5 rounded-md uppercase text-sm tracking-wide btn-press hover:bg-primary-dark">
                     {s.cta1.label}
                   </Link>
                 )}
                 {s.cta2 && (
-                  <Link to={s.cta2.to} className="border-2 border-primary text-primary font-bold px-7 py-3 rounded-md uppercase text-sm tracking-wide btn-press hover:bg-primary hover:text-primary-foreground transition">
+                  <Link href={s.cta2.to} className="border-2 border-primary text-primary font-bold px-7 py-3 rounded-md uppercase text-sm tracking-wide btn-press hover:bg-primary hover:text-primary-foreground transition">
                     {s.cta2.label}
                   </Link>
                 )}

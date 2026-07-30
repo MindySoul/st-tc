@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Instagram, Facebook, MessageCircle, MapPin, Phone, Clock } from 'lucide-react';
 import { SITE, waLink } from '@/lib/site';
 import logo from '@/assets/logo-tecsol.png';
@@ -8,7 +9,7 @@ const Footer = () => (
   <footer className="bg-background border-t border-border mt-0">
     <div className="container py-14 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
       <div>
-        <img src={logo} alt="Tecsol Engenharia" className="h-12 mb-4" />
+        <Image src={logo} alt="Tecsol Engenharia" className="h-12 w-auto mb-4" />
         <h4 className="text-foreground font-bold text-[15px] leading-snug mb-3">
           A empresa referência em soluções energéticas no ES
         </h4>
@@ -27,7 +28,7 @@ const Footer = () => (
             ['/', 'Início'],['/solucoes','Soluções'],['/sobre','Por que a Tecsol?'],
             ['/cases','Cases'],['/blog','Blog'],['/contato','Contato'],['/duvidas-frequentes','Dúvidas Frequentes']
           ].map(([to,label]) => (
-            <li key={to}><Link to={to} className="hover:text-primary transition">{label}</Link></li>
+            <li key={to}><Link href={to} className="hover:text-primary transition">{label}</Link></li>
           ))}
         </ul>
       </div>
@@ -36,7 +37,7 @@ const Footer = () => (
         <h4 className="text-foreground font-bold text-[15px] uppercase mb-4">Soluções</h4>
         <ul className="space-y-2 text-sm text-foreground">
           {['Energia Solar Residencial','Comercial','Rural','Industrial','On-Grid','Híbrido','Off-Grid','Carport Solar','Carregadores Veiculares','Bombeamento Solar','Armazenamento','OMM'].map(s => (
-            <li key={s}><Link to="/solucoes" className="hover:text-primary transition">{s}</Link></li>
+            <li key={s}><Link href="/solucoes" className="hover:text-primary transition">{s}</Link></li>
           ))}
         </ul>
       </div>
@@ -51,7 +52,7 @@ const Footer = () => (
         </ul>
         <div className="mt-5 p-3 bg-secondary rounded-md border border-border">
           <p className="text-foreground text-xs font-semibold">Parceiro e Integrador Oficial</p>
-          <img src={fortlevLogo} alt="Fortlev Solar" className="h-8 w-auto mt-1 object-contain" />
+          <Image src={fortlevLogo} alt="Fortlev Solar" className="h-8 w-auto mt-1 object-contain" />
         </div>
       </div>
     </div>

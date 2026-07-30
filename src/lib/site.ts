@@ -10,10 +10,6 @@ export const SITE = {
   email: 'contato@tecsolengenharia.com.br',
 };
 
-// API do CRM Tecsol (repo egn-tecsol). O lead do site vira negócio no funil
-// "Comercial - Pré-vendas" da Solarz — ver api/app/routes/leads_site.py.
-const API_BASE = import.meta.env.VITE_TECSOL_API_URL ?? 'http://127.0.0.1:5000/api/v1';
-
 // --- Rastreio de anúncio (Google/Meta) --------------------------------------
 // Quem chega por anúncio cai aqui com ?gclid=... (Google) ou ?fbclid=... (Meta).
 // Guardamos no localStorage porque o visitante costuma navegar/voltar antes de
@@ -37,7 +33,8 @@ function readClid(chave: string): string | null {
   } catch { return null; }
 }
 
-/** Lê gclid/fbclid da URL e guarda. Chamar no boot e é idempotente. */
+/** Lê gclid/fbclid da URL e guarda. Idempotente.
+ *  Chamado uma vez, no SiteEffects montado pelo layout. */
 export function captureClickIds() {
   if (typeof window === 'undefined') return;
   const p = new URLSearchParams(window.location.search);
@@ -48,10 +45,6 @@ export function captureClickIds() {
 export function getClickIds() {
   return { gclid: readClid('tecsol_gclid'), fbclid: readClid('tecsol_fbclid') };
 }
-
-// Captura já na importação (o form importa este módulo), garantindo o gclid da
-// landing mesmo que o usuário navegue antes de enviar.
-captureClickIds();
 
 export const CITIES = [
   'Linhares','Colatina','São Mateus','Aracruz','Ibiraçu','João Neiva',
@@ -69,9 +62,9 @@ export function waLink(msg: string) {
   return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(msg)}`;
 }
 
-export async function sendLead(payload: Record<string, any>) {
-  const data = { ...payload, timestamp: new Date().toISOString() };
-  console.log('[Lead]', data);
+/** Dispara o evento de lead no GTM. Só no browser — o dataLayer é do cliente.
+ *  O envio pra API é separado, na Server Action `submitLead` (lib/actions.ts). */
+export function pushLeadEvent(payload: Record<string, any>) {
   try {
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({
@@ -82,29 +75,6 @@ export async function sendLead(payload: Record<string, any>) {
       lead_tipo: payload.tipo_solucao || null,
     });
   } catch (e) { /* noop */ }
-  try {
-    // O lead vai pra API do egn-tecsol, que cria o negócio na Solarz. Antes ia
-    // pro Supabase — o dado ficava lá parado e nunca chegava no CRM.
-    const res = await fetch(`${API_BASE}/publico/leads-site`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nome: payload.nome || payload.name || '',
-        telefone: payload.telefone || payload.phone || '',
-        email: payload.email || null,
-        cidade: payload.cidade || payload.city || null,
-        tipo_solucao: payload.tipo_solucao || payload.solucao || payload.tipo || payload.property_type || null,
-        valor_conta: payload.valor_conta || null,
-        mensagem: payload.mensagem || payload.message || null,
-        origem: payload.origem || payload.source || null,
-        pagina: payload.pagina || payload.page || null,
-        // ids de clique de anúncio, pra virar conversão offline quando fechar
-        gclid: getClickIds().gclid,
-        fbclid: getClickIds().fbclid,
-      }),
-    });
-    if (!res.ok) throw new Error(`API respondeu ${res.status}`);
-  } catch (e) { console.error('[Lead] falha ao enviar', e); }
 }
 
 export function maskPhone(v: string) {

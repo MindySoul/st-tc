@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Zap, DollarSign } from 'lucide-react';
 
