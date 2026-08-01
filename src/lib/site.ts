@@ -23,13 +23,15 @@ function saveClid(chave: string, valor: string | null) {
   try { localStorage.setItem(chave, JSON.stringify({ v: valor, t: Date.now() })); } catch { /* noop */ }
 }
 
-function readClid(chave: string): string | null {
+/** Devolve o id e QUANDO ele foi capturado — o Meta monta o `fbc` com esse
+ *  instante (fb.1.<ms>.<fbclid>), entao descartar o `t` piora a correspondencia. */
+function readClid(chave: string): { v: string; t: number } | null {
   if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(chave);
     if (!raw) return null;
     const { v, t } = JSON.parse(raw);
-    return v && Date.now() - t <= CLID_TTL_MS ? v : null;
+    return v && Date.now() - t <= CLID_TTL_MS ? { v, t } : null;
   } catch { return null; }
 }
 
@@ -43,7 +45,13 @@ export function captureClickIds() {
 }
 
 export function getClickIds() {
-  return { gclid: readClid('tecsol_gclid'), fbclid: readClid('tecsol_fbclid') };
+  const g = readClid('tecsol_gclid');
+  const f = readClid('tecsol_fbclid');
+  return {
+    gclid: g?.v ?? null,
+    fbclid: f?.v ?? null,
+    fbclidEm: f ? new Date(f.t).toISOString() : null,
+  };
 }
 
 export const CITIES = [

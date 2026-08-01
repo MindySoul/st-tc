@@ -22,6 +22,7 @@ export type LeadPayload = {
   pagina?: string | null;
   gclid?: string | null;
   fbclid?: string | null;
+  fbclidEm?: string | null;
 };
 
 export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean }> {
@@ -42,6 +43,10 @@ export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean }>
         // ids de clique de anúncio, pra virar conversão offline quando fechar
         gclid: payload.gclid || null,
         fbclid: payload.fbclid || null,
+        // instante da captura do clique: o Meta monta o `fbc` com ele
+        fbclid_em: payload.fbclidEm || null,
+        // qual site postou — os tres caem na mesma rota da API
+        site: 'tecsolengenharia.com.br',
       }),
     });
     if (!res.ok) {
