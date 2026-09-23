@@ -13,19 +13,19 @@ const LeadForm = ({ origem, pagina, compact, tipoPadrao }: Props) => {
   });
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [erro, setErro] = useState(false);
+  const [erro, setErro] = useState<string | null>(null);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErro(false);
+    setErro(null);
     const dados = { ...form, origem, pagina, ...getClickIds() };
     pushLeadEvent(dados);
-    const { ok } = await submitLead(dados);
+    const { ok, erro: motivo } = await submitLead(dados);
     setLoading(false);
     // Só mostra a tela de sucesso se o lead realmente chegou na API.
     if (ok) setDone(true);
-    else setErro(true);
+    else setErro(motivo ?? '');
   };
 
   if (done) {
@@ -83,13 +83,19 @@ const LeadForm = ({ origem, pagina, compact, tipoPadrao }: Props) => {
           <>Quero que a equipe entre em contato →</>
         )}
       </button>
-      {erro && (
+      {erro !== null && (
         <p className="text-sm text-destructive" role="alert">
-          Não conseguimos enviar seus dados agora. Tente de novo ou{' '}
-          <a href={waLink('Olá, tentei enviar o formulário no site da Tecsol e deu erro.')}
-            target="_blank" rel="noopener noreferrer" className="underline font-semibold">
-            fale direto no WhatsApp
-          </a>.
+          {erro ? (
+            <>{erro} Corrija e envie de novo.</>
+          ) : (
+            <>
+              Não conseguimos enviar seus dados agora. Tente de novo ou{' '}
+              <a href={waLink('Olá, tentei enviar o formulário no site da Tecsol e deu erro.')}
+                target="_blank" rel="noopener noreferrer" className="underline font-semibold">
+                fale direto no WhatsApp
+              </a>.
+            </>
+          )}
         </p>
       )}
       <p className="flex items-start gap-2 text-xs text-muted-foreground">

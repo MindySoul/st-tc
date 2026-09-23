@@ -10,6 +10,19 @@
 
 const API_BASE = process.env.TECSOL_API_URL ?? 'http://127.0.0.1:5000/api/v1';
 
+/** Texto de erro da API: `{"error": {"code", "message"}}`. Só o de validação
+ *  (VALIDATION_ERROR) pode aparecer pro visitante; qualquer outro vira o aviso
+ *  genérico, pra não expor detalhe interno na tela. */
+async function mensagemDaApi(res: Response): Promise<string | null> {
+  try {
+    const corpo = await res.json();
+    const erro = corpo?.error;
+    return erro?.code === 'VALIDATION_ERROR' && typeof erro.message === 'string' ? erro.message : null;
+  } catch {
+    return null;
+  }
+}
+
 export type LeadPayload = {
   nome?: string;
   telefone?: string;
@@ -25,7 +38,7 @@ export type LeadPayload = {
   fbclidEm?: string | null;
 };
 
-export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean }> {
+export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean; erro?: string }> {
   try {
     const res = await fetch(`${API_BASE}/publico/leads-site`, {
       method: 'POST',
@@ -50,8 +63,12 @@ export async function submitLead(payload: LeadPayload): Promise<{ ok: boolean }>
       }),
     });
     if (!res.ok) {
-      console.error('[Lead] API respondeu', res.status);
-      return { ok: false };
+      // A API recusa nome e telefone impossíveis com 400 e um texto escrito pro
+      // visitante ("Informe um telefone de verdade..."). Sem repassar esse texto,
+      // quem digitou errado só via "tente de novo" e não tinha como acertar.
+      const motivo = res.status === 400 ? await mensagemDaApi(res) : null;
+      console.error('[Lead] API respondeu', res.status, motivo ?? '');
+      return { ok: false, erro: motivo ?? undefined };
     }
     return { ok: true };
   } catch (e) {
